@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+
+    body{
+        background: #020617;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .dashboard-container{
+        padding: 20px;
+    }
+
+    .top-section{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-title{
+        color: white;
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-subtitle{
+        color: #94a3b8;
+        font-size: 18px;
+    }
+
+    .status-box{
+        background: linear-gradient(135deg,#0f172a,#1e293b);
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 18px 30px;
+        border-radius: 18px;
+        color: white;
+        box-shadow: 0 0 20px rgba(59,130,246,0.2);
+    }
+
+    .dashboard-grid{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+    }
+
+    .left-grid{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 25px;
+    }
+
+    .tech-card{
+        position: relative;
+        background: rgba(15,23,42,0.9);
+        border-radius: 24px;
+        padding: 30px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.08);
+        transition: 0.4s ease;
+        color: white;
+        min-height: 220px;
+    }
+
+    .tech-card:hover{
+        transform: translateY(-8px) scale(1.02);
+    }
+
+    .tech-card::before{
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        top: -60px;
+        right: -60px;
+        background: rgba(59,130,246,0.15);
+    }
+
+    .books{
+        box-shadow: 0 0 25px rgba(59,130,246,0.25);
+    }
+
+    .students{
+        box-shadow: 0 0 25px rgba(168,85,247,0.25);
+    }
+
+    .issued{
+        box-shadow: 0 0 25px rgba(34,197,94,0.25);
+    }
+
+    .returned{
+        box-shadow: 0 0 25px rgba(249,115,22,0.25);
+    }
+
+    .card-icon{
+        font-size: 42px;
+        margin-bottom: 25px;
+    }
+
+    .card-title{
+        color: #cbd5e1;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .card-value{
+        font-size: 52px;
+        font-weight: bold;
+    }
+
+    .side-panel{
+        background: linear-gradient(145deg,#0f172a,#111827);
+        border-radius: 28px;
+        padding: 35px;
+        border: 1px solid rgba(255,255,255,0.08);
+        color: white;
+        box-shadow: 0 0 30px rgba(59,130,246,0.15);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .side-panel h2{
+        font-size: 30px;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .side-panel p{
+        color: #94a3b8;
+        line-height: 1.9;
+        font-size: 17px;
+    }
+
+    .tech-btn{
+        margin-top: 25px;
+        background: linear-gradient(90deg,#3b82f6,#06b6d4);
+        border: none;
+        padding: 14px 25px;
+        border-radius: 14px;
+        color: white;
+        font-weight: 600;
+        width: fit-content;
+        transition: 0.3s;
+    }
+
+    .tech-btn:hover{
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(59,130,246,0.5);
+    }
+
+    @media(max-width: 992px){
+
+        .dashboard-grid{
+            grid-template-columns: 1fr;
+        }
+
+        .left-grid{
+            grid-template-columns: 1fr;
+        }
+
+        .top-section{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+    }
+
+</style>
+
+<div class="dashboard-container">
+
+    <!-- TOP SECTION -->
+
+    <div class="top-section">
+
+        <div>
+            <h1 class="dashboard-title">
+                SmartLibrary
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Futuristic Digital Library Dashboard
+            </p>
+        </div>
+
+        <div class="status-box">
+            🚀 System Active
+        </div>
+
+    </div>
+
+    <!-- MAIN GRID -->
+
+    <div class="dashboard-grid">
+
+        <!-- LEFT CARDS -->
+
+        <div class="left-grid">
+
+            <!-- BOOKS -->
+
+            <div class="tech-card books">
+
+                <div class="card-icon">
+                    📚
+                </div>
+
+                <div class="card-title">
+                    Total Books
+                </div>
+
+                <div class="card-value">
+                    {{ total_books }}
+                </div>
+
+            </div>
+
+            <!-- STUDENTS -->
+
+            <div class="tech-card students">
+
+                <div class="card-icon">
+                    👨‍🎓
+                </div>
+
+                <div class="card-title">
+                    Students
+                </div>
+
+                <div class="card-value">
+                    {{ total_students }}
+                </div>
+
+            </div>
+
+            <!-- ISSUED -->
+
+            <div class="tech-card issued">
+
+                <div class="card-icon">
+                    📖
+                </div>
+
+                <div class="card-title">
+                    Issued Books
+                </div>
+
+                <div class="card-value">
+                    {{ issued_books }}
+                </div>
+
+            </div>
+
+            <!-- RETURNED -->
+
+            <div class="tech-card returned">
+
+                <div class="card-icon">
+                    ✅
+                </div>
+
+                <div class="card-title">
+                    Returned Books
+                </div>
+
+                <div class="card-value">
+                    {{ returned_books }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE PANEL -->
+
+        <div class="side-panel">
+
+            <h2>
+                Smart Analytics
+            </h2>
+
+            <p>
+                SmartLibrary provides an intelligent and modern way
+                to manage books, students, issued records, and returns
+                using a futuristic dashboard design with advanced UI styling.
+            </p>
+
+            <button class="tech-btn">
+                Explore System
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
